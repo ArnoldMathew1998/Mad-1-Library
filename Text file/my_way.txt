@@ -1,0 +1,8 @@
+First i created my ER diagrams using the website 
+https://drawsql.app/teams/arnold-mathew/diagrams/firstpro
+
+in this same time i was working with login HTML pages and learning to use git properly 
+
+whenever i face issues with the code and i needed a referance i used https://stackoverflow.com/ and it was very helpful whenever i got stuck
+
+when i started creating this project there only very few files now for better understanding i have seprated everthing based on my comfort level 
