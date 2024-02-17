@@ -1,6 +1,8 @@
 from flask import render_template,request,redirect,url_for,session, flash,jsonify
 import requests
 from datetime import datetime
+import pycountry
+
 
 
 #-----------------------------------------------Common to both admin and user---------------------------------------------------
@@ -11,7 +13,7 @@ def User_login():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        user_api = f'http://localhost:5000/user/username/{username}'
+        user_api = f'http://127.0.0.1:5000/user/username/{username}'
         response = requests.get(user_api)
         if response.status_code == 200:
             # Parse the JSON data
@@ -64,7 +66,7 @@ def Admin_dashboard():
 
 
 def Section():
-    Book_section_get_all = 'http://127.0.0.1:5000/book_sections/all'
+    Book_section_get_all = f'http://127.0.0.1:5000/book_sections/all'
     response = requests.get(Book_section_get_all)
 
     if response.status_code == 200:
@@ -85,8 +87,8 @@ def Admin_add_section():
             'sec_name': section_name,
             'description': section_description
         }
-        api_url = 'http://127.0.0.1:5000/book_sections'
-        response = requests.post(api_url, json=data)
+        Book_section_get_all = f'http://127.0.0.1:5000/book_sections'
+        response = requests.post(Book_section_get_all, json=data)
         success = response
         flash('success' if success else 'danger')
         if success:
@@ -103,12 +105,7 @@ def Admin_edit_section(sec_id):
         }
         api_url = f'http://127.0.0.1:5000/book_sections/{sec_id}'
         response = requests.put(api_url, json=data)
-        success = response.status_code == 200
-        flash('success' if success else 'danger')
-        if success:
-            return redirect(url_for('Section'))
-        else:
-            return redirect(url_for('Admin_dashboard'))
+        return redirect(url_for('Section'))
     else:
         section_details_url = f'http://127.0.0.1:5000/book_sections/{sec_id}'
         response = requests.get(section_details_url)
@@ -128,6 +125,9 @@ def Admin_delete_section(sec_id):
 def Books():
     sec_id = request.args.get('section_id')
     sec_name = request.args.get('section_name')
+    if sec_id is not None and sec_name is not None:
+        session['sec_id'] = sec_id
+        session['section_name'] = sec_name
     Book_get_all = f'http://127.0.0.1:5000/books/all?section_id={sec_id}'
     response = requests.get(Book_get_all)
 
@@ -135,4 +135,37 @@ def Books():
         books = response.json()
     else:
         books = []
-    return render_template('books.html', books=books, sec_id=sec_id,sec_name=sec_name)
+    return render_template('books.html', books=books, sec_id=session['sec_id'],sec_name=session['section_name'])
+
+def Admin_add_book():
+    if request.method == 'POST':
+        sec_id = int(session.get('sec_id'))
+        book_name = request.form.get('book_name')
+        author_name = request.form.get('author_name')
+        date_issued = request.form.get('date_issued')
+        language = request.form.get('language')
+        Content = request.form.get('Content')
+        data = {
+            'book_name': book_name,
+            'author_name': author_name,
+            'date_issued': date_issued,
+            'content': Content,
+            'language': language,
+            'sec_id': sec_id
+        }
+        Books_url = f'http://127.0.0.1:5000/books'
+        response = requests.post(Books_url, json=data)
+        success = response
+        flash('success' if success else 'danger')
+        if success:
+            session.clear()
+            return redirect(url_for('Section'))
+        else:
+            all_languages = list(pycountry.languages)
+            language_names = [lang.name for lang in all_languages]
+            return render_template('add book.html',languages=language_names)
+    else:
+        all_languages = list(pycountry.languages)
+        language_names = [lang.name for lang in all_languages]
+        return render_template('add book.html',languages=language_names)
+    

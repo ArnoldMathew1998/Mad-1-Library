@@ -1,5 +1,5 @@
 from flask_restful import Resource, fields, marshal_with, reqparse
-from Database.models import db,Book_section
+from Database.models import db,Book_section,Book
 from datetime import datetime
 import pytz
 
@@ -58,10 +58,17 @@ class Book_section_api(Resource):
 
     def delete(self, sec_id):
         book_section = Book_section.query.get(sec_id)
+        books = Book.query.filter_by(sec_id=sec_id).all()
+        
+        if books:
+            for book in books:
+                db.session.delete(book)
         if book_section:
             db.session.delete(book_section)
             db.session.commit()
-            return {'message': 'Book section deleted successfully'}, 201
+            return {'message': 'Book section deleted successfully'}, 204
         else:
+            db.session.rollback()
             return {'message': 'Book section not found'}, 404
+
 

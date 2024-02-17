@@ -14,8 +14,7 @@ class Book(db.Model):
     content = db.Column(db.String, nullable=False)
     language = db.Column(db.String, nullable=False)
     sec_id = db.Column(db.Integer, db.ForeignKey('book_section.sec_id'), nullable=False)
-    images = db.relationship('Image', backref=backref('book', cascade='all, delete-orphan', single_parent=True))
-    user_logs = db.relationship('User_log', backref=backref('book', cascade='all, delete-orphan', single_parent=True))
+    
 
 class Image(db.Model):
     __tablename__ = 'image'
@@ -36,7 +35,7 @@ class Book_section(db.Model):
     sec_name = db.Column(db.String, unique=True, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     description = db.Column(db.String, nullable=False)
-    books = db.relationship('Book', backref=backref('book_section', cascade='all, delete-orphan', single_parent=True))
+
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -47,4 +46,4 @@ class User(db.Model):
     Username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False, unique=True)
     mail_id = db.Column(db.String, nullable=False, unique=True)
-    user_logs = db.relationship('User_log', backref=backref('user', cascade='all, delete-orphan', single_parent=True))
+    

@@ -6,35 +6,77 @@
     <title>Sections</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="../static/login.css" rel="stylesheet">
+    <style>
+        body {
+            background-size: cover;
+            background-position: center;
+            color: white;
+            overflow: hidden; 
+            margin: 0; 
+        }
 
+        .gradient-bg {
+            background: linear-gradient(0deg, rgba(34, 193, 195, 0.3) 0%, rgba(148, 237, 167, 0.3) 100%, rgba(166, 181, 105, 0.3) 100%, rgba(253, 174, 45, 0.3) 100%);
+            height: 100vh; 
+            width: 100%; 
+        }
+
+        .search-container {
+            text-align: center;
+        }
+
+        .search-form {
+            margin-top: 30px;
+        }
+
+        .form-check-inline {
+            margin-right: 10px;
+        }
+
+        .navbar {
+            height: 50px;
+        }
+
+        .nav-link {
+            padding: 10px;
+            margin: 0;
+            color: white;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #007BFF;
+        }
+
+        
+    </style>
 </head>
-<body>
+<body class="gradient-bg">
     <div class="px-3 py-0 bg-dark text-white">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <ul class="nav col-lg-auto ms-auto my-2 text-small">
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-light d-flex flex-column align-items-center">
-                            <i class="bi bi-house-door mb-1" style="font-size: 1.5rem;"></i>
+                        <a href="{{ url_for('Admin_dashboard') }}" class="nav-link">
+                            <i class="bi bi-house-door" style="font-size: 1.5rem;"></i>
                             Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-light d-flex flex-column align-items-center">
-                            <i class="bi bi-table mb-1" style="font-size: 1.5rem;"></i>
+                        <a href="#" class="nav-link">
+                            <i class="bi bi-table" style="font-size: 1.5rem;"></i>
                             Orders
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/add_section" class="nav-link text-light d-flex flex-column align-items-center">
+                        <a href="{{ url_for('Section') }}" class="nav-link">
                             <i class="bi bi-journal-plus" style="font-size: 1.5rem;"></i>
-                            Add Section
+                            Section
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/logout" class="nav-link text-light d-flex flex-column align-items-center">
-                            <i class="bi bi-box-arrow-right mb-1" style="font-size: 1.5rem;"></i>
+                        <a href="{{ url_for('logout') }}" class="nav-link">
+                            <i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i>
                             Logout
                         </a>
                     </li>
@@ -42,9 +84,9 @@
             </div>
         </div>
     </div>
-    <div>
-        <div class="container mt-4">
-            <h2>Sections</h2>
+
+    <div class="container-sections mt-4">
+            <h2 class="text-black">Sections</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -58,21 +100,22 @@
                 <tbody>
                     {% for section in sections %}
                         <tr>
-                            <td><a href="/book?section_id={{ section.sec_id }}&section_name={{ section.sec_name }}">{{ section.sec_id }}</a></td>
+                            <td><a href="{{ url_for('book', section_id=section.sec_id, section_name=section.sec_name) }}">{{ section.sec_id }}</a></td>
                             <td>{{ section.sec_name }}</td>
                             <td>{{ section.description }}</td>
                             <td>{{ section.date_created }}</td>
                             <td>
-                                <form method="post" action="/Section/Delete/{{ section.sec_id }}">
-                                    <a href="/Section/Edit/{{ section.sec_id }}" class="btn btn-warning btn-sm">Edit</a>
+                                <form method="post" action="{{ url_for('Admin_delete_section', sec_id=section.sec_id) }}">
+                                    <a href="{{ url_for('Admin_edit_section', sec_id=section.sec_id) }}" class="btn btn-warning btn-sm">Edit</a>
                                     <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                                 </form>
+                                
                             </td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
-            <a href="/Section/Add" class="btn btn-primary mb-3">Add New Section</a>
+            <a href="{{ url_for('Admin_add_section') }}" class="btn btn-primary mb-3">Add New Section</a>
             <div></div>
         </div>
     </div>

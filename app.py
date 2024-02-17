@@ -16,6 +16,7 @@ api = Api(app)
 app.config['SECRET_KEY'] = 'Mad-1-project'
 link=Controller.login
 
+
 #----------------------------------------------Add resources to the API--------------------------------------------------------
 api.add_resource(Book_api, '/books', '/books/<int:book_id>','/books/all')
 
@@ -33,23 +34,23 @@ api.add_resource(Image_api, '/images', '/images/<int:image_id>')
 #-------------------------------------------------Routes for web pages-----------------------------------------------------------
 
 app.add_url_rule('/', 'Home', link.Home)
-app.add_url_rule('/User_login', 'User_login', link.User_login, methods=['GET','POST'])
+app.add_url_rule('/login', 'User_login', link.User_login, methods=['GET','POST'])
 
 app.add_url_rule('/Registration', 'Registration', link.Registration)
 app.add_url_rule('/user_dashboard/<int:user_id>','user_dashboard',link.user_dashboard)
 app.add_url_rule('/logout','logout',link.logout)
 
 # Admin routes for web page
-app.add_url_rule('/Admin_login', 'Admin_login', link.Admin_login)
-app.add_url_rule('/Admin_dashboard','Admin_dashboard',link.Admin_dashboard, methods=['GET','POST'])
+app.add_url_rule('/Admin/login', 'Admin_login', link.Admin_login, methods=['GET','POST'])
+app.add_url_rule('/Admin/login/dashboard','Admin_dashboard',link.Admin_dashboard, methods=['GET','POST'])
 # Section -----view_Add_Edit_Delete
-app.add_url_rule('/Section','Section',link.Section)
-app.add_url_rule('/Section/Add','/Section/Add',link.Admin_add_section, methods=['GET','POST'])
-app.add_url_rule('/Section/Edit/<int:sec_id>','/Section/edit/',link.Admin_edit_section, methods=['GET','POST'])
-app.add_url_rule('/Section/Delete/<int:sec_id>','/Section/Delete/',link.Admin_delete_section, methods=['GET','POST'])
+app.add_url_rule('/Admin/login/dashboard/Section','Section',link.Section)
+app.add_url_rule('/Admin/login/dashboard/Section/Add','Admin_add_section',link.Admin_add_section, methods=['GET','POST'])
+app.add_url_rule('/Admin/login/dashboard/Section/Edit/<int:sec_id>','Admin_edit_section',link.Admin_edit_section, methods=['GET','POST'])
+app.add_url_rule('/Admin/login/dashboard/Section/Delete/<int:sec_id>','Admin_delete_section',link.Admin_delete_section, methods=['GET','POST'])
 # Books--------view_Add_Edit_Delete
-app.add_url_rule('/book','book',link.Books)
-
+app.add_url_rule('/Admin/login/dashboard/book','book',link.Books)
+app.add_url_rule('/Admin/login/dashboard/book/Add','Admin_add_book',link.Admin_add_book, methods=['GET','POST'])
 
 if __name__ == '__main__':
     with app.app_context():
