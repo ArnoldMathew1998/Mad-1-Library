@@ -1,4 +1,4 @@
-from flask_restful import Resource, fields, marshal_with, reqparse
+from flask_restful import Resource, fields, marshal_with, reqparse,request
 from Database.models import db,Book
 
 
@@ -10,22 +10,40 @@ book_parser.add_argument('content', type=str, required=True, help='Content canno
 book_parser.add_argument('language', type=str, required=True, help='Language cannot be blank')
 book_parser.add_argument('sec_id', type=int, required=True, help='Section ID cannot be blank')
 
+Book_fields={
+    'book_id': fields.Integer,
+    'book_name': fields.String,
+    'author_name': fields.String,
+    'date_issued': fields.DateTime,
+    'content' : fields.String,
+    'language': fields.String,
+    'sec_id' : fields.Integer
+    }
 
 class Book_api(Resource):
-    def get(self, book_id):
-        book = Book.query.get(book_id)
-        if book:
-            return {
-                'book_id': book.book_id,
-                'book_name': book.book_name,
-                'author_name': book.author_name,
-                'date_issued': book.date_issued,
-                'content': book.content,
-                'language': book.language,
-                'sec_id': book.sec_id
-            }
-        return {'message': 'Book not found'}, 404
+    @marshal_with(Book_fields)
+    def get(self, book_id=None):
+        section_id = request.args.get('section_id')
 
+        if section_id:
+            books = Book.query.filter_by(section_id=section_id).all()
+            if books:
+                return books
+            else:
+                return {'message': 'No books found for the given section ID'}, 404
+        elif book_id:
+            book = Book.query.get(book_id)
+            if book:
+                return book
+            else:
+                return {'message': 'Book not found'}, 404
+        else:
+            books = Book.query.all()
+            if books:
+                return books
+            else:
+                return {'message': 'Books not found'}, 404
+    
     def post(self):
         book_args = book_parser.parse_args()
         new_book = Book(

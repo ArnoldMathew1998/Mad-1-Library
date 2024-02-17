@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import backref
+from datetime import datetime
+
 
 db = SQLAlchemy()
 
@@ -32,7 +34,7 @@ class Book_section(db.Model):
     __tablename__ = 'book_section'
     sec_id = db.Column(db.Integer, primary_key=True)
     sec_name = db.Column(db.String, unique=True, nullable=False)
-    date_created = db.Column(db.Date, nullable=False)
+    date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     description = db.Column(db.String, nullable=False)
     books = db.relationship('Book', backref=backref('book_section', cascade='all, delete-orphan', single_parent=True))
 

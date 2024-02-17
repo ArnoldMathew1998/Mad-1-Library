@@ -8,6 +8,16 @@
     align-items: center;
     flex-direction: column; /* Added to align items vertically */
 }
+.gradient-bg1 {
+    height: 100vh;
+    background: rgb(34, 193, 195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(148,237,167,1) 100%, rgba(166,181,105,1) 100%, rgba(253,174,45,1) 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; /* Added to align items vertically */
+}
 .text-black {
     color: black;
 }

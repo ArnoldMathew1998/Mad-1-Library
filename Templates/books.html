@@ -44,7 +44,7 @@
     <div>
         <div class="container mt-4">
             <h2>Books</h2>
-            <h5>Section Id: {{ section.id }} | Section Name: {{ section.name }}</h5>
+            <h5>Section Id: {{ sec_id }} | Section Name: {{ sec_name }}</h5>
             <table class="table">
                 <thead>
                     <tr>
@@ -58,18 +58,19 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for book in books %}
                     <tr>
                         <td><a href="/edit_book/{{ book.id }}">{{ book.id }}</a></td>
                         <td>{{ book.name }}</td>
                         <td>{{ book.author_name }}</td>
                         <td>{{ book.date_issued }}</td>
                         <td>{{ book.language }}</td>
-                        <td>{{ book.image }}</td>
                         <td>
                             <a href="/edit_book/{{ book.id }}" class="btn btn-warning btn-sm">Edit</a>
                             <a href="/delete_book/{{ book.id }}" class="btn btn-danger btn-sm">Delete</a>
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             <a href="#" class="btn btn-primary mb-3">Add New Book</a>
