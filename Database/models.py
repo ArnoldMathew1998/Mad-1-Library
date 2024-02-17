@@ -42,7 +42,7 @@ class User(db.Model):
     First_name = db.Column(db.String, nullable=False)
     Middle_name = db.Column(db.String, nullable=True)
     Last_name = db.Column(db.String, nullable=True)
-    Username_name = db.Column(db.String, nullable=False, unique=True)
+    Username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False, unique=True)
     mail_id = db.Column(db.String, nullable=False, unique=True)
     user_logs = db.relationship('User_log', backref=backref('user', cascade='all, delete-orphan', single_parent=True))

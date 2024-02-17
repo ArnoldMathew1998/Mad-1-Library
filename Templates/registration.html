@@ -9,41 +9,41 @@
 </head>
 <body class="container mt-5 gradient-bg">
     <header class="text-white p-3">
-        <h1 class="text-center">To Register</h1>
-        <h2 class="text-center">Enter Your Details</h2>
+        <h1 class="text-center text-black">To Register</h1>
+        <h2 class="text-center text-black">Enter Your Details</h2>
     </header>
 
-    <form class="row g-3">
+    <form class="row g-3" action="\user_dashboard" method="post" enctype="multipart/form-data">
         <div class="col-md-4">
-            <label for="F_name" class="form-label">First Name</label>
-            <input type="text" class="form-control" id="F_name" placeholder="First Name">
+            <label for="First_name" class="form-label text-black">First Name</label>
+            <input type="text" class="form-control" id="First_name" placeholder="First Name" name="First_name">
         </div>
         <div class="col-md-4">
-            <label for="M_name" class="form-label">Middle Name</label>
-            <input type="text" class="form-control" id="M_name" placeholder="Middle Name">
+            <label for="Middle_name" class="form-label text-black">Middle Name</label>
+            <input type="text" class="form-control" id="Middle_name" placeholder="Middle Name" name="Middle_name">
         </div>
         <div class="col-md-4">
-            <label for="L_name" class="form-label">Last Name</label>
-            <input type="text" class="form-control" id="L_name" placeholder="Last Name">
+            <label for="Last_name" class="form-label text-black">Last Name</label>
+            <input type="text" class="form-control" id="Last_name" placeholder="Last Name" name="Last_name">
         </div>
 
         <div class="col-md-4">
-            <label for="mail_id" class="form-label">Mail ID</label>
-            <input type="email" class="form-control" id="mail_id" placeholder="Mail ID">
+            <label for="mail_id" class="form-label text-black">Mail ID</label>
+            <input type="email" class="form-control" id="mail_id" placeholder="Mail ID" name="mail_id">
         </div>
         <div class="col-md-8"></div>
 
         <div class="col-md-4">
-            <label for="Username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="Username" placeholder="Username">
+            <label for="Username" class="form-label text-black">Username</label>
+            <input type="text" class="form-control" id="Username" placeholder="Username" name="Username">
         </div>
         <div class="col-md-4">
-            <label for="Password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="Password" placeholder="Password">
+            <label for="password" class="form-label text-black">Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
         </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Sign in</button>
-            <a href="/" class="btn btn-warning">Back</a>
+            <button type="submit" class="btn btn-primary text-black">Sign in</button>
+            <a href="/" class="btn btn-warning text-black">Back</a>
         </div>
     </form>
 

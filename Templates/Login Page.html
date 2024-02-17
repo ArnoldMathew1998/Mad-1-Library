@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Log In Page</title>
+    <title>User Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="..\static\login.css" rel="stylesheet">
+
 </head>
-
-<body class="p-3 mb-2 text-emphasis-primary gradient-bg">
-  <div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="btn-group dropend" >
-      <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Login
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="/User_login">User Login</a></li>
-        <li><a class="dropdown-item" href="/Admin_login">Administration Login</a></li>
-      </ul>
+<body>
+    <div class="px-3 py-0 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <ul class="nav col-lg-auto ms-auto my-2 text-small">
+                    <li class="nav-item">
+                        <button class="nav-link text-light d-flex flex-column align-items-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" id="loginDropdown">
+                            <i class="bi bi-box-arrow-in-right mb-1" style="font-size: 1.5rem;"></i>
+                            Login
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="loginDropdown">
+                            <li><a class="dropdown-item" href="/User_login">User Login</a></li>
+                            <li><a class="dropdown-item" href="/Admin_login">Administration Login</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/Registration" class="nav-link text-light d-flex flex-column align-items-center">
+                            <i class="bi bi-person-plus mb-1" style="font-size: 1.5rem;"></i>
+                            Register
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="btn-group dropend mx-2">
-      <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-        Register
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="/Registration">User Register</a></li>
-      </ul>
+    <div class="gradient-bg" >
     </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-</body>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    </body>
 </html>

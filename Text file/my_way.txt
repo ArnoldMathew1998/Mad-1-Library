@@ -6,3 +6,7 @@ in this same time i was working with login HTML pages and learning to use git pr
 whenever i face issues with the code and i needed a referance i used https://stackoverflow.com/ and it was very helpful whenever i got stuck
 
 when i started creating this project there only very few files now for better understanding i have seprated everthing based on my comfort level 
+
+
+this is the link i used to select the bg colours
+https://cssgradient.io/

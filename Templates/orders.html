@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book order</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="../static/login.css" rel="stylesheet">
+</head>
+<body>
+    <div class="px-3 py-0 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <ul class="nav col-lg-auto ms-auto my-2 text-small">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-light d-flex flex-column align-items-center">
+                            <i class="bi bi-house-door mb-1" style="font-size: 1.5rem;"></i>
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link text-light d-flex flex-column align-items-center">
+                            <i class="bi bi-table mb-1" style="font-size: 1.5rem;"></i>
+                            Orders
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/add_section" class="nav-link text-light d-flex flex-column align-items-center">
+                            <i class="bi bi-journal-plus" style="font-size: 1.5rem;"></i>
+                            Add Section
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link text-light d-flex flex-column align-items-center">
+                            <i class="bi bi-box-arrow-right mb-1" style="font-size: 1.5rem;"></i>
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container mt-4">
+            <h2>Book Orders</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">User ID</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Book ID</th>
+                        <th scope="col">Book Name</th>
+                        <th scope="col">Borrowed Date</th>
+                        <th scope="col">Return Date</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ order.user_id }}</td>
+                        <td>{{ order.user_name }}</td>
+                        <td><a href="/book_details/{{ order.book_id }}">{{ order.book_id }}</a></td>
+                        <td>{{ order.book_name }}</td>
+                        <td>{{ order.borrowed_date }}</td>
+                        <td>{{ order.return_date }}</td>
+                        <td>
+                            <a href="/revoke_order/{{ order.id }}" class="btn btn-danger btn-sm">Revoke</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
