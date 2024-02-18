@@ -66,9 +66,10 @@ def Admin_dashboard():
 
 
 def Section():
-    Book_section_get_all = f'http://127.0.0.1:5000/book_sections/all'
+    Book_section_get_all = f'http://127.0.0.1:5000/Api/Sections/All'
     response = requests.get(Book_section_get_all)
-
+    session['sec_id'] = None
+    session['section_name'] = None
     if response.status_code == 200:
         sections = response.json()
         for section in sections:
@@ -87,12 +88,9 @@ def Admin_add_section():
             'sec_name': section_name,
             'description': section_description
         }
-        Book_section_get_all = f'http://127.0.0.1:5000/book_sections'
-        response = requests.post(Book_section_get_all, json=data)
-        success = response
-        flash('success' if success else 'danger')
-        if success:
-            return redirect(url_for('Section'))
+        Book_section_get_all = f'http://127.0.0.1:5000/Api/Sections'
+        requests.post(Book_section_get_all, json=data)
+        return redirect(url_for('Section'))
     return render_template('add Section.html')
 
 def Admin_edit_section(sec_id):
@@ -103,11 +101,11 @@ def Admin_edit_section(sec_id):
             'sec_name': section_name,
             'description': section_description
         }
-        api_url = f'http://127.0.0.1:5000/book_sections/{sec_id}'
+        api_url = f'http://127.0.0.1:5000/Api/Sections/{sec_id}'
         response = requests.put(api_url, json=data)
         return redirect(url_for('Section'))
     else:
-        section_details_url = f'http://127.0.0.1:5000/book_sections/{sec_id}'
+        section_details_url = f'http://127.0.0.1:5000/Api/Sections/{sec_id}'
         response = requests.get(section_details_url)
 
         if response.status_code == 200:
@@ -117,18 +115,17 @@ def Admin_edit_section(sec_id):
 
 def Admin_delete_section(sec_id):
     if request.method == 'POST':
-        section_details_url = f'http://127.0.0.1:5000/book_sections/{sec_id}'
+        section_details_url = f'http://127.0.0.1:5000/Api/Sections/{sec_id}'
         requests.delete(section_details_url)
         return redirect(url_for('Section'))
-    return redirect(url_for('Section'))
-
+    
 def Books():
     sec_id = request.args.get('section_id')
     sec_name = request.args.get('section_name')
     if sec_id is not None and sec_name is not None:
         session['sec_id'] = sec_id
         session['section_name'] = sec_name
-    Book_get_all = f'http://127.0.0.1:5000/books/all?section_id={sec_id}'
+    Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?section_id={session['sec_id']}'
     response = requests.get(Book_get_all)
 
     if response.status_code == 200:
@@ -153,19 +150,52 @@ def Admin_add_book():
             'language': language,
             'sec_id': sec_id
         }
-        Books_url = f'http://127.0.0.1:5000/books'
-        response = requests.post(Books_url, json=data)
-        success = response
-        flash('success' if success else 'danger')
-        if success:
-            session.clear()
-            return redirect(url_for('Section'))
-        else:
-            all_languages = list(pycountry.languages)
-            language_names = [lang.name for lang in all_languages]
-            return render_template('add book.html',languages=language_names)
+        Books_url = f'http://127.0.0.1:5000/Api/Book'
+        requests.post(Books_url, json=data)
+        return redirect(url_for('book'))
+    
     else:
         all_languages = list(pycountry.languages)
         language_names = [lang.name for lang in all_languages]
         return render_template('add book.html',languages=language_names)
     
+def Admin_Edit_book(book_id):
+    if request.method == 'POST':
+        book_name = request.form.get('book_name')
+        author_name = request.form.get('author_name')
+        date_issued = request.form.get('date_issued')
+        language = request.form.get('language')
+        Content = request.form.get('Content')
+
+        edit_book_url = f'http://127.0.0.1:5000/Api/Book/{book_id}'
+        
+       
+        data = {
+            'book_name': book_name,
+            'author_name': author_name,
+            'date_issued': date_issued,
+            'content': Content,
+            'language': language,
+        }
+ 
+        requests.put(edit_book_url, json=data)
+        return redirect(url_for('book')) 
+    
+    else:
+        get_book_url = f'http://127.0.0.1:5000/Api/Book/{book_id}'
+        response = requests.get(get_book_url)
+
+        if response.status_code == 200:
+            book_details = response.json()
+            all_languages = list(pycountry.languages)
+            language_names = [lang.name for lang in all_languages]
+            return render_template('edit book.html', book=book_details, languages=language_names)
+        else:
+            return redirect(url_for('book'))
+
+    
+def Admin_Delete_book(book_id):
+    if request.method == 'POST':
+        delete_book_url = f'http://127.0.0.1:5000/Api/Book/{book_id}'
+        requests.delete(delete_book_url)
+        return redirect(url_for('book'))

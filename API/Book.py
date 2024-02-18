@@ -8,7 +8,7 @@ book_parser.add_argument('author_name', type=str, required=True, help='Author na
 book_parser.add_argument('date_issued', type=str, required=True, help='Date issued cannot be blank')
 book_parser.add_argument('content', type=str, required=True, help='Content cannot be blank')
 book_parser.add_argument('language', type=str, required=True, help='Language cannot be blank')
-book_parser.add_argument('sec_id', type=int, required=True, help='Section ID cannot be blank')
+book_parser.add_argument('sec_id', type=int, help='Section ID cannot be blank')
 
 Book_fields={
     'book_id': fields.Integer,
@@ -69,7 +69,6 @@ class Book_api(Resource):
             book.date_issued = book_args['date_issued']
             book.content = book_args['content']
             book.language = book_args['language']
-            book.sec_id = book_args['sec_id']
 
             db.session.commit()
             return {'message': 'Book updated successfully'}, 201
