@@ -62,7 +62,35 @@ def Admin_login():
 
 
 def Admin_dashboard():
-    return render_template('Admin dashboard.html')
+    if request.method == 'POST':
+        Search = request.form.get('SearchTerm')
+        SearchType = request.form.get('SearchType') # Use a different name for the radio button
+        print(Search,SearchType)
+        if SearchType == 'Book_Name':
+            Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?book_name={Search}'
+        elif SearchType == 'Author':
+            Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?author_name={Search}'
+        elif SearchType == 'Year':
+            Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?year={Search}'
+        elif SearchType == 'Section_ID':
+            Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?sec_id={Search}'
+        elif SearchType == 'Book_ID':
+            Book_get_all = f'http://127.0.0.1:5000/Api/Book/{Search}'
+        elif SearchType == 'Language':
+            Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?language={Search}'
+        elif SearchType == 'Content':
+            Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?content={Search}'
+        else:
+            Book_get_all = f'http://127.0.0.1:5000/Api/Book/All'
+
+        response = requests.get(Book_get_all)
+        if response.status_code == 200:
+            print('Book_Name')
+            books = response.json()
+        else:
+            books = []
+        return render_template('Admin dashboard.html', books=books)
+    return render_template('Admin dashboard.html', books=[])
 
 
 def Section():

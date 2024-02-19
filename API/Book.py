@@ -23,26 +23,51 @@ Book_fields={
 class Book_api(Resource):
     @marshal_with(Book_fields)
     def get(self, book_id=None):
-        section_id = request.args.get('section_id')
+        # Get query parameters from the request
+        book_name = request.args.get('book_name')
+        author_name = request.args.get('author_name')
+        year = request.args.get('year')
+        content = request.args.get('content')
+        language = request.args.get('language')
+        sec_id = request.args.get('sec_id')
 
-        if section_id:
-            books = Book.query.filter_by(sec_id=section_id).all()
-            if books:
-                return books
-            else:
-                return {'message': 'No books found for the given section ID'}, 404
-        elif book_id:
+        # Initialize the query with all books
+        query = Book.query
+
+        # Filter the query based on the provided parameters
+        if book_id:
+            # If book_id is provided, retrieve a specific book by its ID
             book = Book.query.get(book_id)
             if book:
                 return book
             else:
                 return {'message': 'Book not found'}, 404
+
+        if book_name:
+            query = query.filter_by(book_name=book_name)
+
+        if author_name:
+            query = query.filter_by(author_name=author_name)
+
+        if year:
+            query = query.filter(Book.date_issued.like(f'{year}%'))
+
+        if content:
+            query = query.filter(Book.content.like(f'%{content}%'))
+
+        if language:
+            query = query.filter_by(language=language)
+
+        if sec_id:
+            query = query.filter_by(sec_id=sec_id)
+
+        books = query.all()
+
+        if books:
+            return books
         else:
-            books = Book.query.all()
-            if books:
-                return books
-            else:
-                return {'message': 'Books not found'}, 404
+            return {'message': 'Books not found'}, 404
+
     
     def post(self):
         book_args = book_parser.parse_args()

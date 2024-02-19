@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sections</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-
-    
+    <style>
+        .search-container {
+            padding: 20px; 
+        }
+        .search-results-container {
+            margin-top: 20px; 
+        }
+    </style>
 </head>
+
 <body>
     <div class="px-3 py-0 bg-dark text-white">
         <div class="container">
@@ -43,53 +54,95 @@
             </div>
         </div>
     </div>
-    <div>
-    <div class="gradient-bg1" >
-        <div class="container d-flex justify-content-center align-items-center vh-100">
-            <div class="mb-3">
+    <form action="{{ url_for('Admin_dashboard') }}" method="post">
+        <div class="search-container">
+            <div class="container d-flex justify-content-center align-items-center">
                 <div class="mb-3">
-                    <input autofocus="autofocus" name="Search" id="searchform" class="form-control text-black" size="60" maxlength="200" value="" placeholder="Book Search">
-                </div>
-                <div class="mb-3">
-                    <input type="submit" class="btn btn-warning" value="Search">
-                </div>
-                <b class="mb-2 text-black">Search in fields</b>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Search" value="Section Name">
-                    <label class="form-check-label text-black">Section Name</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Search" value="Book Name">
-                    <label class="form-check-label text-black">Book Name</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Search" value="Author">
-                    <label class="form-check-label text-black">Author</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Search" value="Year">
-                    <label class="form-check-label text-black">Year</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Search" value="Section ID">
-                    <label class="form-check-label text-black">Section ID</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Search" value="Book ID">
-                    <label class="form-check-label text-black">Book ID</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Search" value="Language">
-                    <label class="form-check-label text-black">Language</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="Search" value="Description">
-                    <label class="form-check-label text-black">Description</label>
+                    <div class="mb-3">
+                        <input autofocus="autofocus" name="SearchTerm" id="searchform" class="form-control text-black"
+                            size="60" maxlength="200" value="" placeholder="Book Search">
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-warning" value="Search">
+                    </div>
+                    <b class="mb-2 text-black">Search in fields</b>
+                    <b class="mb-2 text-black">Search in fields</b>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SearchType" value="Book_Name">
+                        <label class="form-check-label text-black">Book Name</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SearchType" value="Author">
+                        <label class="form-check-label text-black">Author</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SearchType" value="Year">
+                        <label class="form-check-label text-black">Year</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SearchType" value="Section_ID">
+                        <label class="form-check-label text-black">Section ID</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SearchType" value="Book_ID">
+                        <label class="form-check-label text-black">Book ID</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SearchType" value="Language">
+                        <label class="form-check-label text-black">Language</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="SearchType" value="Content">
+                        <label class="form-check-label text-black">Content</label>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    </body>
+
+    <div class="container search-results-container">
+        {% if books %}
+        <h2 class="text-black">Books</h2>
+        <h3>Search Results:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Book Id</th>
+                    <th scope="col">Book Name</th>
+                    <th scope="col">Author Name</th>
+                    <th scope="col">Date Issued</th>
+                    <th scope="col">Language</th>
+                    <th scope="col">Section ID</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                    <tr>
+                        <td><a href="/edit_book/{{ book.book_id }}">{{ book.book_id }}</a></td>
+                        <td>{{ book.book_name }}</td>
+                        <td>{{ book.author_name }}</td>
+                        <td>{{ book.date_issued }}</td>
+                        <td>{{ book.language }}</td>
+                        <td>{{ book.sec_id }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('Admin_Delete_book', book_id=book.book_id) }}">
+                                <a href="{{ url_for('Admin_Edit_book', book_id=book.book_id) }}" class="btn btn-warning btn-sm">Edit</a>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+
+</body>
+
 </html>
