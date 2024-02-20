@@ -20,6 +20,7 @@ link=Controller.login
 #----------------------------------------------Add resources to the API--------------------------------------------------------
 api.add_resource(Book_api, '/Api/Book', '/Api/Book/<int:book_id>','/Api/Book/All')
 api.add_resource(Book_section_api, '/Api/Sections', '/Api/Sections/<int:sec_id>','/Api/Sections/All')
+api.add_resource(Image_api, '/Api/images', '/Api/images/<int:image_id>')
 
 api.add_resource(User_log_api, '/user_logs/<int:user_id>/<int:book_id>', '/user_logs')
 
@@ -27,7 +28,7 @@ api.add_resource(User_id, '/user/id', '/users/id/<int:user_id>')
 api.add_resource(User_Mail_id, '/user/mail/<string:mail_id>')
 api.add_resource(User_Username, '/user/username/<string:username>')
 
-api.add_resource(Image_api, '/images', '/images/<int:image_id>')
+
 
 
 

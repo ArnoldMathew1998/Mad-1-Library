@@ -8,7 +8,7 @@ book_parser.add_argument('author_name', type=str, required=True, help='Author na
 book_parser.add_argument('date_issued', type=str, required=True, help='Date issued cannot be blank')
 book_parser.add_argument('content', type=str, required=True, help='Content cannot be blank')
 book_parser.add_argument('language', type=str, required=True, help='Language cannot be blank')
-book_parser.add_argument('sec_id', type=int, help='Section ID cannot be blank')
+book_parser.add_argument('sec_id', type=int, required=True, help='Section ID cannot be blank')
 
 Book_fields={
     'book_id': fields.Integer,
@@ -23,7 +23,6 @@ Book_fields={
 class Book_api(Resource):
     @marshal_with(Book_fields)
     def get(self, book_id=None):
-        # Get query parameters from the request
         book_name = request.args.get('book_name')
         author_name = request.args.get('author_name')
         year = request.args.get('year')
@@ -31,12 +30,9 @@ class Book_api(Resource):
         language = request.args.get('language')
         sec_id = request.args.get('sec_id')
 
-        # Initialize the query with all books
         query = Book.query
 
-        # Filter the query based on the provided parameters
         if book_id:
-            # If book_id is provided, retrieve a specific book by its ID
             book = Book.query.get(book_id)
             if book:
                 return book
@@ -66,7 +62,7 @@ class Book_api(Resource):
         if books:
             return books
         else:
-            return {'message': 'Books not found'}, 404
+            return {'message': 'Book not found'}, 404
 
     
     def post(self):

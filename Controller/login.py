@@ -153,7 +153,7 @@ def Books():
     if sec_id is not None and sec_name is not None:
         session['sec_id'] = sec_id
         session['section_name'] = sec_name
-    Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?section_id={session['sec_id']}'
+    Book_get_all = f'http://127.0.0.1:5000/Api/Book/All?sec_id={session['sec_id']}'
     response = requests.get(Book_get_all)
 
     if response.status_code == 200:
