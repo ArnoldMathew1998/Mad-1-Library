@@ -59,7 +59,7 @@
                 <tbody>
                     {% for book in books %}
                     <tr>
-                        <td><a href="/edit_book/{{ book.book_id }}">{{ book.book_id }}</a></td>
+                        <td><a href="{{url_for('Book_details',book_id=book.book_id)}}">{{ book.book_id }}</a></td>
                         <td>{{ book.book_name }}</td>
                         <td>{{ book.author_name }}</td>
                         <td>{{ book.date_issued }}</td>

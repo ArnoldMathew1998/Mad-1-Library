@@ -1,13 +1,7 @@
 from flask_restful import Resource, fields, marshal_with, reqparse,request
 from Database.models import db,Image
 
-image_fields = {
-    'image_id': fields.Integer,
-    'image_data': fields.String,
-    'book_id': fields.Integer,
-    'sec_id': fields.Integer
-}
-# Define request parsers
+
 image_parser = reqparse.RequestParser()
 image_parser.add_argument('image_data', type=str, required=True, help='Base64-encoded image data')
 image_parser.add_argument('book_id', type=int, help='ID of the associated book')
@@ -15,11 +9,10 @@ image_parser.add_argument('sec_id', type=int, help='ID of the associated Section
 
 # Define resources
 class Image_api(Resource):
-    @marshal_with(image_fields)
     def get(self, book_id):
         image = Image.query.get(book_id)
         if image:
-            return image
+            return {'image_data': image.image_data}
         else:
             return {'message': 'Image not found'}, 404
 

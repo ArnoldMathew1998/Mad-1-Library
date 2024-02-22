@@ -303,3 +303,25 @@ def Admin_Delete_book(book_id):
         delete_book_url = f'http://127.0.0.1:5000/Api/Book/{book_id}'
         requests.delete(delete_book_url)
         return redirect(url_for('book'))
+    
+def Book_details(book_id):
+    # API endpoints
+    Book_get = f'http://127.0.0.1:5000/Api/Book/{book_id}'
+    Image_get = f'http://127.0.0.1:5000/Api/images/bi/{book_id}'
+
+    # Fetch book details from the API
+    response_book = requests.get(Book_get)
+    if response_book.status_code == 200:
+        book = response_book.json()
+    else:
+        book = {}
+
+    # Fetch image details from the API
+    response_image = requests.get(Image_get)
+    if response_image.status_code == 200:
+        image_data = response_image.json().get('image_data')
+    else:
+        image_data = None
+
+    # Render the HTML with the book and image data
+    return render_template('book details.html', book=book, image_data=image_data)

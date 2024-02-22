@@ -60,6 +60,8 @@ app.add_url_rule('/Admin/login/dashboard/book','book',link.Books)
 app.add_url_rule('/Admin/login/dashboard/book/Add','Admin_add_book',link.Admin_add_book, methods=['GET','POST'])
 app.add_url_rule('/Admin/login/dashboard/book/Edit/<int:book_id>','Admin_Edit_book',link.Admin_Edit_book, methods=['GET','POST'])
 app.add_url_rule('/Admin/login/dashboard/book/Delete/<int:book_id>','Admin_Delete_book',link.Admin_Delete_book, methods=['POST'])
+app.add_url_rule('/login/dashboard/book/details/<int:book_id>','Book_details',link.Book_details)
+
 
 if __name__ == '__main__':
     with app.app_context():
