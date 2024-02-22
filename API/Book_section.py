@@ -1,7 +1,9 @@
 from flask_restful import Resource, fields, marshal_with, reqparse
-from Database.models import db,Book_section,Book
+from Database.models import db,Book_section, Book
+from API.Book import Book_api
 from datetime import datetime
 import pytz
+import requests
 
 Book_section_parser = reqparse.RequestParser()
 Book_section_parser.add_argument('sec_name', type=str, help='Name of the book section')
@@ -58,11 +60,11 @@ class Book_section_api(Resource):
 
     def delete(self, sec_id):
         book_section = Book_section.query.get(sec_id)
-        books = Book.query.filter_by(sec_id=sec_id).all()
-        
-        if books:
-            for book in books:
-                db.session.delete(book)
+        Book_delete_all = f'http://127.0.0.1:5000/Api/Book/All?sec_id={sec_id}'
+        image_delete_all = f'http://127.0.0.1:5000/Api/images/si/{sec_id}'
+        requests.delete(Book_delete_all)
+        requests.delete(image_delete_all)
+       
         if book_section:
             db.session.delete(book_section)
             db.session.commit()

@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import backref
 from datetime import datetime
-from sqlalchemy.types import LargeBinary
 
 
 db = SQLAlchemy()
@@ -20,9 +19,9 @@ class Book(db.Model):
 class Image(db.Model):
     __tablename__ = 'image'
     image_id = db.Column(db.Integer, primary_key=True)
-    image_data = db.Column(db.LargeBinary)
-    pdf_data = db.Column(db.LargeBinary)  
+    image_data = db.Column(db.Text)
     book_id = db.Column(db.Integer, db.ForeignKey('book.book_id'), nullable=False)
+    sec_id = db.Column(db.Integer, db.ForeignKey('book_section.sec_id'), nullable=False)
 
 class User_log(db.Model):
     __tablename__ = 'user_log'

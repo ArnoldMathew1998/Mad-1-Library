@@ -8,19 +8,25 @@ from API.User import User_id, User_Mail_id, User_Username
 from API.User_log import User_log_api
 import Controller.login
 
+
 app = Flask(__name__, static_url_path='/static')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///library.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 api = Api(app)
 app.config['SECRET_KEY'] = 'Mad-1-project'
+app.config['UPLOAD_FOLDER'] = 'static/uploads'
 link=Controller.login
+
+
+
 
 
 #----------------------------------------------Add resources to the API--------------------------------------------------------
 api.add_resource(Book_api, '/Api/Book', '/Api/Book/<int:book_id>','/Api/Book/All')
 api.add_resource(Book_section_api, '/Api/Sections', '/Api/Sections/<int:sec_id>','/Api/Sections/All')
-api.add_resource(Image_api, '/Api/images', '/Api/images/<int:image_id>')
+api.add_resource(Image_api, '/Api/images', '/Api/images/bi/<int:book_id>','/Api/images/<int:book_id>/<int:sec_id>','/Api/images/si/<int:sec_id>')
+
 
 api.add_resource(User_log_api, '/user_logs/<int:user_id>/<int:book_id>', '/user_logs')
 

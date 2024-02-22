@@ -1,6 +1,6 @@
 from flask_restful import Resource, fields, marshal_with, reqparse,request
-from Database.models import db,Book
-
+from Database.models import db, Book, Image
+import requests
 
 book_parser = reqparse.RequestParser()
 book_parser.add_argument('book_name', type=str, required=True, help='Book name cannot be blank')
@@ -79,7 +79,7 @@ class Book_api(Resource):
         db.session.add(new_book)
         db.session.commit()
 
-        return {'message': 'Book added successfully'}, 201
+        return {'message': 'Book added successfully', 'book_id': new_book.book_id}, 201
 
     def put(self, book_id):
         book_args = book_parser.parse_args()
@@ -92,14 +92,22 @@ class Book_api(Resource):
             book.language = book_args['language']
 
             db.session.commit()
-            return {'message': 'Book updated successfully'}, 201
+            return {'message': 'Book updated successfully', 'book_id': book_id}, 201
         return {'message': 'Book not found'}, 404
 
-    def delete(self, book_id):
-        book = Book.query.get(book_id)
-        if book:
-            db.session.delete(book)
+    def delete(self, book_id=None):
+        sec_id = request.args.get('sec_id')
+        if sec_id:
+            Book.query.filter_by(sec_id=sec_id).delete()
             db.session.commit()
             return {'message': 'Book deleted successfully'}, 201
+        if book_id:
+            book = Book.query.get(book_id)
+            image_delete_all = f'http://127.0.0.1:5000/Api/images/bi/{book_id}'
+            requests.delete(image_delete_all)
+            if book:
+                db.session.delete(book)
+                db.session.commit()
+                return {'message': 'Book deleted successfully'}, 201
         return {'message': 'Book not found'}, 404
 
