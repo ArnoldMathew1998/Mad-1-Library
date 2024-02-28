@@ -14,7 +14,7 @@
         <h2 class="text-center text-black">Enter Your Details</h2>
     </header>
 
-    <form class="row g-3" action="\user_dashboard" method="post" enctype="multipart/form-data">
+    <form class="row g-3" action="{{url_for('Registration')}}" method="post" enctype="multipart/form-data">
         <div class="col-md-4">
             <label for="First_name" class="form-label text-black">First Name</label>
             <input type="text" class="form-control" id="First_name" placeholder="First Name" name="First_name">

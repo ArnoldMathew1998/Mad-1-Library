@@ -4,16 +4,16 @@ from flask import redirect,url_for
 from datetime import datetime
 from Controller.login import User_login
 User_parser = reqparse.RequestParser()
-User_parser.add_argument('First_name', type=str, location='form', help='First name of the user')
-User_parser.add_argument('Middle_name', type=str, location='form', help='Middle name of the user')
-User_parser.add_argument('Last_name', type=str, location='form', help='Last name of the user')
-User_parser.add_argument('Username', type=str, location='form', help='Username of the user')
-User_parser.add_argument('password', type=str, location='form', help='Password of the user')
-User_parser.add_argument('mail_id', type=str, location='form', help='Mail ID of the user')
+User_parser.add_argument('First_name', type=str, help='First name of the user')
+User_parser.add_argument('Middle_name', type=str, help='Middle name of the user')
+User_parser.add_argument('Last_name', type=str,  help='Last name of the user')
+User_parser.add_argument('Username', type=str, help='Username of the user')
+User_parser.add_argument('password', type=str, help='Password of the user')
+User_parser.add_argument('mail_id', type=str, help='Mail ID of the user')
 
 
 user_output = {
-    'id': fields.Integer,
+    'user_id': fields.Integer,
     'First_name': fields.String,
     'Middle_name': fields.String,
     'Last_name': fields.String,
@@ -26,14 +26,19 @@ user_output = {
 class User_id(Resource):
 
     @marshal_with(user_output)
-    def get(self, user_id):
-        user = User.query.get(user_id)
+    def get(self, user_id=None, Username=None):
+        if user_id is not None:
+            user = User.query.get(user_id)
+        elif Username:
+            user = User.query.filter_by(Username=Username).first()
+        else:
+            return {'message': 'Invalid request'}, 400
+
         if user:
             return user
         else:
             return {'message': 'User not found'}, 404
-        
-    @marshal_with(user_output)
+
     def post(self):
         User_args = User_parser.parse_args()
         new_user = User(
@@ -46,10 +51,9 @@ class User_id(Resource):
 
         db.session.add(new_user)
         db.session.commit()
-        return redirect(url_for('user_dashboard', user_id=new_user.id))
+        return {'message': 'User added successfully', 'user_id': new_user.user_id}, 201
 
-    
-    @marshal_with(user_output)
+
     def put(self, user_id):
         User_args = User_parser.parse_args()
         user = User.query.get(user_id)
@@ -74,22 +78,3 @@ class User_id(Resource):
         else:
             return {'message': 'User not found'}, 404
         
-class User_Mail_id(Resource):
-
-    @marshal_with(user_output)
-    def get(self, mail_id):
-        user = User.query.filter_by(mail_id=mail_id).first()
-        if user:
-            return user
-        else:
-            return {'message': 'User not found'}, 404
-        
-class User_Username(Resource):
-
-    @marshal_with(user_output)
-    def get(self, username):
-        user = User.query.filter_by(Username=username).first()
-        if user:
-            return user
-        else:
-            return {'message': 'User not found'}, 404

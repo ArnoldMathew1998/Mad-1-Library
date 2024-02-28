@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Details</title>
+    <title>Sections</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
-
 </head>
 <body class="gradient-bg1">
     <div class="px-3 py-0 bg-dark text-white">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <ul class="nav col-lg-auto ms-auto my-2 text-small">
-                    {% if User %}
                     <li class="nav-item">
                         <a href="{{ url_for('user_dashboard') }}" class="nav-link">
                             <i class="bi bi-house-door" style="font-size: 1.5rem;"></i>
@@ -22,7 +20,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ url_for('Section') }}" class="nav-link">
+                        <a href="{{ url_for('User_My_Books') }}" class="nav-link">
                             <i class="bi bi-book" style="font-size: 1.5rem;"></i>
                             My Books
                         </a>
@@ -32,28 +30,7 @@
                             <i class="bi bi-journal-plus" style="font-size: 1.5rem;"></i>
                             Section
                         </a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a href="{{ url_for('Admin_dashboard') }}" class="nav-link">
-                            <i class="bi bi-house-door" style="font-size: 1.5rem;"></i>
-                            Home
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="bi bi-table" style="font-size: 1.5rem;"></i>
-                            Orders
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ url_for('Section') }}" class="nav-link">
-                            <i class="bi bi-journal-plus" style="font-size: 1.5rem;"></i>
-                            Section
-                        </a>
-                    </li>
-                    {% endif %}
-                    
+                    </li>                    
                     <li class="nav-item">
                         <a href="{{ url_for('logout') }}" class="nav-link">
                             <i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i>
@@ -64,27 +41,35 @@
             </div>
         </div>
     </div>
-
-    <div>
-        <div class="container mt-4">
-            <div class="book-details">
-                <div class="book-image">
-                    {% if image_data %}
-                        <img src="data:image;base64, {{ image_data }}" alt="Book Image" style="max-height: 300px; max-width: 300px;">
-                    {% else %}
-                        <p>No Image Available</p>
-                    {% endif %}
-                </div>
-                <div class="book-info text-black">
-                    <h2>Book Id : {{ book.book_id }} | Book Name: {{ book.book_name }}</h2>
-                    <h5><p>Author: {{ book.author_name }}</p>
-                    <p>Date Issued: {{ book.date_issued }}</p>
-                    <p>Language: {{ book.language }}</p>
-                    <p>Section ID: {{ book.sec_id }}</p>
-                    <p>Content: {{ book.content }}</p></h5>
-                </div>
-            </div>
-            <div></div>
+    <div class="container-sections mt-4">
+            <h2 class="text-black">My Books</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Book Id</th>
+                        <th scope="col">Book Name</th>
+                        <th scope="col">Author Name</th>
+                        <th scope="col">Date Issued</th>
+                        <th scope="col">Language</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.book_id }}</td>                       
+                        <td>{{ book.book_name }}</td>
+                        <td>{{ book.author_name }}</td>
+                        <td>{{ book.date_issued }}</td>
+                        <td>{{ book.language }}</td>
+                        <td>
+                            <a href="{{ url_for('Book_details', book_id=book.book_id) }}" class="btn btn-success btn-sm">READ</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

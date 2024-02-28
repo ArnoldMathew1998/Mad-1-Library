@@ -27,8 +27,8 @@ class User_log(db.Model):
     __tablename__ = 'user_log'
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('book.book_id'), primary_key=True)
-    borrow_date = db.Column(db.Date, nullable=False)
-    return_date = db.Column(db.Date, nullable=False)
+    borrow_date = db.Column(db.DateTime,  nullable=False)
+    return_date = db.Column(db.DateTime, nullable=False)
 
 class Book_section(db.Model):
     __tablename__ = 'book_section'
@@ -45,6 +45,6 @@ class User(db.Model):
     Middle_name = db.Column(db.String, nullable=True)
     Last_name = db.Column(db.String, nullable=True)
     Username = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.String, nullable=False, unique=True)
+    password = db.Column(db.String, nullable=False)
     mail_id = db.Column(db.String, nullable=False, unique=True)
     
