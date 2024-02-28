@@ -59,12 +59,7 @@ class Book_section_api(Resource):
         return {'message': 'Book section created successfully'}, 201
 
     def delete(self, sec_id):
-        book_section = Book_section.query.get(sec_id)
-        Book_delete_all = f'http://127.0.0.1:5000/Api/Book/All?sec_id={sec_id}'
-        image_delete_all = f'http://127.0.0.1:5000/Api/images/si/{sec_id}'
-        requests.delete(Book_delete_all)
-        requests.delete(image_delete_all)
-       
+        book_section = Book_section.query.get(sec_id)       
         if book_section:
             db.session.delete(book_section)
             db.session.commit()

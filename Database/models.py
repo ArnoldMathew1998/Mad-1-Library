@@ -13,20 +13,21 @@ class Book(db.Model):
     date_issued = db.Column(db.String, nullable=False)
     content = db.Column(db.String, nullable=False)
     language = db.Column(db.String, nullable=False)
-    sec_id = db.Column(db.Integer, db.ForeignKey('book_section.sec_id'), nullable=False)
-    
+    sec_id = db.Column(db.Integer, db.ForeignKey('book_section.sec_id', ondelete='CASCADE'), nullable=False)
+    images = db.relationship('Image', backref='book', cascade='all, delete-orphan')
+    user_logs = db.relationship('User_log', backref='book', cascade='all, delete-orphan')
 
 class Image(db.Model):
     __tablename__ = 'image'
     image_id = db.Column(db.Integer, primary_key=True)
     image_data = db.Column(db.Text)
-    book_id = db.Column(db.Integer, db.ForeignKey('book.book_id'), nullable=False)
-    sec_id = db.Column(db.Integer, db.ForeignKey('book_section.sec_id'), nullable=False)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.book_id', ondelete='CASCADE'), nullable=False)
+    sec_id = db.Column(db.Integer, db.ForeignKey('book_section.sec_id', ondelete='CASCADE'), nullable=False)
 
 class User_log(db.Model):
     __tablename__ = 'user_log'
-    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), primary_key=True)
-    book_id = db.Column(db.Integer, db.ForeignKey('book.book_id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id', ondelete='CASCADE'), primary_key=True)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.book_id', ondelete='CASCADE'), primary_key=True)
     borrow_date = db.Column(db.DateTime,  nullable=False)
     return_date = db.Column(db.DateTime, nullable=False)
 
@@ -36,7 +37,7 @@ class Book_section(db.Model):
     sec_name = db.Column(db.String, unique=True, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     description = db.Column(db.String, nullable=False)
-
+    books = db.relationship('Book', backref='book_section', cascade='all, delete-orphan')
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -47,4 +48,4 @@ class User(db.Model):
     Username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     mail_id = db.Column(db.String, nullable=False, unique=True)
-    
+    user_logs = db.relationship('User_log', backref='user', cascade='all, delete-orphan')

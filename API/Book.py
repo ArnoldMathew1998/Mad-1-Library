@@ -103,8 +103,6 @@ class Book_api(Resource):
             return {'message': 'Book deleted successfully'}, 201
         if book_id:
             book = Book.query.get(book_id)
-            image_delete_all = f'http://127.0.0.1:5000/Api/images/bi/{book_id}'
-            requests.delete(image_delete_all)
             if book:
                 db.session.delete(book)
                 db.session.commit()
