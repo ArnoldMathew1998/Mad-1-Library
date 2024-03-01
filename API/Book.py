@@ -1,6 +1,5 @@
 from flask_restful import Resource, fields, marshal_with, reqparse,request
-from Database.models import db, Book, Image
-import requests
+from Database.models import db, Book 
 
 book_parser = reqparse.RequestParser()
 book_parser.add_argument('book_name', type=str, required=True, help='Book name cannot be blank')
@@ -9,6 +8,7 @@ book_parser.add_argument('date_issued', type=str, required=True, help='Date issu
 book_parser.add_argument('content', type=str, required=True, help='Content cannot be blank')
 book_parser.add_argument('language', type=str, required=True, help='Language cannot be blank')
 book_parser.add_argument('sec_id', type=int, required=True, help='Section ID cannot be blank')
+
 
 Book_fields={
     'book_id': fields.Integer,
@@ -33,7 +33,7 @@ class Book_api(Resource):
         query = Book.query
 
         if book_id:
-            book = Book.query.get(book_id)
+            book = query.get(book_id)
             if book:
                 return book
             else:

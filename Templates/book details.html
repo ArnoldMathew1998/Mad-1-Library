@@ -33,6 +33,7 @@
                             Section
                         </a>
                     </li>
+                    
                     {% else %}
                     <li class="nav-item">
                         <a href="{{ url_for('Admin_dashboard') }}" class="nav-link">
@@ -41,7 +42,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="{{url_for('Admin_User_revoke')}}" class="nav-link">
                             <i class="bi bi-table" style="font-size: 1.5rem;"></i>
                             Orders
                         </a>
@@ -50,6 +51,12 @@
                         <a href="{{ url_for('Section') }}" class="nav-link">
                             <i class="bi bi-journal-plus" style="font-size: 1.5rem;"></i>
                             Section
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('Admin_overview') }}" class="nav-link">
+                            <i class="bi bi-speedometer" style="font-size: 1.5rem;"></i>
+                            Distribution
                         </a>
                     </li>
                     {% endif %}

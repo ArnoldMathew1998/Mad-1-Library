@@ -9,32 +9,38 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 
 </head>
-<body>
+<body class="gradient-bg1">
     <div class="px-3 py-0 bg-dark text-white">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-between">
-                <ul class="nav col-lg-auto ms-auto my-2 text-small">
+                <ul class="nav col-lg-auto ms-auto my-2 text-small"> 
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-light d-flex flex-column align-items-center">
-                            <i class="bi bi-house-door mb-1" style="font-size: 1.5rem;"></i>
+                        <a href="{{ url_for('Admin_dashboard') }}" class="nav-link">
+                            <i class="bi bi-house-door" style="font-size: 1.5rem;"></i>
                             Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link text-light d-flex flex-column align-items-center">
-                            <i class="bi bi-table mb-1" style="font-size: 1.5rem;"></i>
+                        <a href="{{url_for('Admin_User_revoke')}}" class="nav-link">
+                            <i class="bi bi-table" style="font-size: 1.5rem;"></i>
                             Orders
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/add_section" class="nav-link text-light d-flex flex-column align-items-center">
+                        <a href="{{ url_for('Section') }}" class="nav-link">
                             <i class="bi bi-journal-plus" style="font-size: 1.5rem;"></i>
-                            Add Section
+                            Section
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="/logout" class="nav-link text-light d-flex flex-column align-items-center">
-                            <i class="bi bi-box-arrow-right mb-1" style="font-size: 1.5rem;"></i>
+                        <a href="{{ url_for('Admin_overview') }}" class="nav-link">
+                            <i class="bi bi-speedometer" style="font-size: 1.5rem;"></i>
+                            Distribution
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ url_for('logout') }}" class="nav-link">
+                            <i class="bi bi-box-arrow-right" style="font-size: 1.5rem;"></i>
                             Logout
                         </a>
                     </li>
@@ -42,10 +48,30 @@
             </div>
         </div>
     </div>
-    <div>
-        <div class="container mt-4">
-            <h2>Book Orders</h2>
-            <table class="table">
+<div class="container mt-5">
+    <h1 class="text-black">Admin Access</h1>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Registered Users</h5>
+                    <p class="card-text">{{ user_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Total Books</h5>
+                    <p class="card-text">{{ book_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h3 class="text-black">Book Orders</h3>
+        <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">User ID</th>
@@ -58,17 +84,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for order in orders %}
                     <tr>
                         <td>{{ order.user_id }}</td>
                         <td>{{ order.user_name }}</td>
-                        <td><a href="/book_details/{{ order.book_id }}">{{ order.book_id }}</a></td>
+                        <td><a href="{{url_for('Book_details',book_id=order.book_id)}}">{{ order.book_id }}</a></td>
                         <td>{{ order.book_name }}</td>
                         <td>{{ order.borrowed_date }}</td>
                         <td>{{ order.return_date }}</td>
                         <td>
-                            <a href="/revoke_order/{{ order.id }}" class="btn btn-danger btn-sm">Revoke</a>
+                            <form action="{{url_for('Admin_User_revoke',user_id=order.user_id,book_id=order.book_id)}}" method="post">
+                                <button type="submit" class="btn btn-danger btn-sm">Revoke</button>
+                            </form>
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
             <div></div>

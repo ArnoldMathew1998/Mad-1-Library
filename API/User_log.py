@@ -2,7 +2,6 @@ from flask_restful import Resource, fields, marshal_with, reqparse
 from Database.models import db, User_log
 from datetime import datetime
 
-# Define the fields for serialization
 user_log_fields = {
     'user_id': fields.Integer,
     'book_id': fields.Integer,
@@ -22,7 +21,7 @@ class User_log_api(Resource):
         if user_id:
             user_logs = User_log.query.filter_by(user_id=user_id).all()
             if user_logs:
-                return user_logs, 200
+                return user_logs
             else:
                 return {'message': 'User logs not found for the specified user_id'}, 404
         elif book_id:
@@ -32,8 +31,12 @@ class User_log_api(Resource):
             else:
                 return {'message': 'User log not found for the specified book_id'}, 404
         else:
-            return {'message': 'Please provide either user_id or book_id as a parameter'}, 400
-    
+            all_user_logs = User_log.query.all()
+            if all_user_logs:
+                return all_user_logs
+            else:
+                return {'message': 'No user logs found in the database'}, 404
+
     @marshal_with(user_log_fields)
     def post(self):
         User_log_args = User_log_parser.parse_args()

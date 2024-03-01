@@ -1,9 +1,8 @@
 from flask_restful import Resource, fields, marshal_with, reqparse
 from Database.models import db,Book_section, Book
-from API.Book import Book_api
 from datetime import datetime
 import pytz
-import requests
+
 
 Book_section_parser = reqparse.RequestParser()
 Book_section_parser.add_argument('sec_name', type=str, help='Name of the book section')

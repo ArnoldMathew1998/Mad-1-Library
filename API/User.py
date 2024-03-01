@@ -1,8 +1,5 @@
 from flask_restful import Resource, fields, marshal_with, reqparse
 from Database.models import db, User
-from flask import redirect,url_for
-from datetime import datetime
-from Controller.login import User_login
 User_parser = reqparse.RequestParser()
 User_parser.add_argument('First_name', type=str, help='First name of the user')
 User_parser.add_argument('Middle_name', type=str, help='Middle name of the user')
@@ -27,18 +24,15 @@ class User_id(Resource):
 
     @marshal_with(user_output)
     def get(self, user_id=None, Username=None):
-        if user_id is not None:
+        if user_id:
             user = User.query.get(user_id)
-        elif Username:
+            return user
+        if Username:
             user = User.query.filter_by(Username=Username).first()
-        else:
-            return {'message': 'Invalid request'}, 400
-
-        if user:
             return user
         else:
-            return {'message': 'User not found'}, 404
-
+            user= User.query.all()
+            return user
     def post(self):
         User_args = User_parser.parse_args()
         new_user = User(

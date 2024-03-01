@@ -6,7 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column; /* Added to align items vertically */
+    flex-direction: column; 
 }
 
 .text-black {
@@ -23,7 +23,7 @@
 
 .book-image {
     flex: 1;
-    max-width: 300px; /* Adjust as needed */
+    max-width: 300px;
     margin-right: 20px;
 }
 
@@ -41,8 +41,8 @@ body {
 
 .gradient-bg1 {
     background: linear-gradient(0deg, rgba(34, 193, 195, 0.3) 0%, rgba(148, 237, 167, 0.3) 100%, rgba(166, 181, 105, 0.3) 100%, rgba(253, 174, 45, 0.3) 100%);
-    height: 100vh; /* Set height to full viewport height */
-    width: 100%; /* Set width to full viewport width */
+    height: 100vh; 
+    width: 100%; 
 }
 
 .search-container {
@@ -58,16 +58,16 @@ body {
 }
 
 .navbar {
-    height: 50px; /* Adjust the height as needed */
+    height: 50px; 
 }
 
 .nav-link {
     padding: 10px;
-    margin: 0; /* Reset margin */
-    color: white; /* Set default color to white */
-    transition: color 0.3s; /* Add transition for smooth color change */
+    margin: 0; 
+    color: white; 
+    transition: color 0.3s; 
 }
 
 .nav-link:hover {
-    color: #007BFF; /* Change color on hover to blue */
+    color: #007BFF; 
 }

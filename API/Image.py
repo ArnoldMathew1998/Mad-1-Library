@@ -1,4 +1,4 @@
-from flask_restful import Resource, fields, marshal_with, reqparse,request
+from flask_restful import Resource, reqparse,request
 from Database.models import db,Image
 
 
@@ -7,7 +7,6 @@ image_parser.add_argument('image_data', type=str, required=True, help='Base64-en
 image_parser.add_argument('book_id', type=int, help='ID of the associated book')
 image_parser.add_argument('sec_id', type=int, help='ID of the associated Section')
 
-# Define resources
 class Image_api(Resource):
     def get(self, book_id):
         image = Image.query.get(book_id)
